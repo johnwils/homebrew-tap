@@ -1,6 +1,6 @@
 cask "windrose" do
-  version "0.7.2"
-  sha256 "82283ad3ec8925fd9ffcce8261a0746284277e62d4ec3117d9fa8860710ff611"
+  version "0.7.3"
+  sha256 "384450389cd57a93581af4ed6448b2d58c89e507e2b0ab2eadc8a71cbaa2b43c"
 
   url "https://updates.index9.dev/windrose/releases/Windrose-#{version}.dmg",
       verified: "updates.index9.dev/windrose/"
