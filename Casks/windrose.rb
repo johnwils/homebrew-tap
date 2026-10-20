@@ -23,20 +23,23 @@ cask "windrose" do
 
   uninstall quit: "dev.index9.windrose"
 
-  # Root state (SMAppService daemon, /Library/Application Support/Windrose) is
-  # deliberately not touched: Homebrew can't unregister a BTM item. Run
-  # Windrose's own "Uninstall Fan Service…" first.
-  zap trash: [
-    "~/Library/Application Support/Windrose",
-    "~/Library/Caches/dev.index9.windrose",
-    "~/Library/HTTPStorages/dev.index9.windrose",
-    "~/Library/Preferences/dev.index9.windrose.plist",
-    "~/Library/WebKit/dev.index9.windrose",
-  ]
+  # The fan service is an SMAppService daemon that Homebrew can't unregister.
+  # Run Windrose's own "Uninstall Windrose…" first. zap then sweeps the same
+  # paths it removes. The Pro licence (Keychain) and the cache shared with
+  # Whetstone (~/Library/Caches/telemetrysignalcache) are deliberately kept.
+  zap delete: "/Library/Application Support/Windrose",
+      trash:  [
+        "~/Library/Application Support/Windrose",
+        "~/Library/Caches/dev.index9.windrose",
+        "~/Library/HTTPStorages/dev.index9.windrose",
+        "~/Library/Preferences/dev.index9.windrose.plist",
+        "~/Library/Saved Application State/dev.index9.windrose.savedState",
+        "~/Library/WebKit/dev.index9.windrose",
+      ]
 
   caveats <<~EOS
     Windrose must stay in /Applications for its fan service to register.
-    Before `brew uninstall --zap`, open Windrose and use
-    ⋯ → Uninstall Fan Service… so the privileged helper is removed cleanly.
+    To remove it, use Uninstall Windrose… in Windrose's ⋯ or status menu.
+    It removes the fan service cleanly; `brew uninstall --zap` can't.
   EOS
 end
